@@ -9,6 +9,8 @@ public class Main {
 
         while (true){
             int totalCost = 0;
+
+            // Вывод информации товаров с их количеством
             System.out.println("\nДоступные для заказа запчасти:");
             for (int i = 0; i < store.parts.size(); i++){
                 Part part = store.parts.get(i);
@@ -16,7 +18,7 @@ public class Main {
             }
 
             int[] order = new int[10];
-            System.out.println("\n\tВведите номер запчасти и его количество");
+            System.out.println("\n\tВведите количество товаров");
 
             int i = 0;
             while (i < store.parts.size()){
@@ -24,11 +26,12 @@ public class Main {
                 order[i] = sc.nextInt();
                 sc.nextLine();
 
+                // Если выбрано больше, чем имеется
                 if (order[i] > store.parts.get(i).quantity){
                     System.out.println("\tНельзя выбрать больше, чем есть в наличии");
                 }
                 else{
-                    System.out.println("\t" + (i+1) + " | " + store.parts.get(i).name + " | " + store.parts.get(i).weight + " кг | " + store.parts.get(i).price + " рублей.");
+                    System.out.println("\t" + (i+1) + " | " + store.parts.get(i).name + " | " + store.parts.get(i).weight + " кг |  Цена товара: " + store.parts.get(i).price + " рублей. Итоговая стоимость товара: " + store.parts.get(i).price * order[i]);
                     totalCost += order[i] * store.parts.get(i).price;
                     store.parts.get(i).quantity -= order[i];
                     i++;
@@ -43,9 +46,9 @@ public class Main {
 
             if (again.equals("Нет")){
                 System.out.print("\n\tВсего доброго!");
+                store.savePartsToFile();
                 break;
             }
-
         }
     }
 }
